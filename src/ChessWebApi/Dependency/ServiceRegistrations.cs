@@ -1,5 +1,6 @@
 namespace ChessWebApi.Dependency;
 
+using System.Text.Json.Serialization;
 using Chess.Core.Services;
 using Controllers.Examples;
 using Microsoft.OpenApi.Models;
@@ -18,7 +19,13 @@ public static class ServiceRegistrations
         builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
         // Add controllers
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+            .AddJsonOptions(x =>
+            {
+                // Convert enums to strings when returning response
+                x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+
         builder.Services.AddEndpointsApiExplorer();
 
         // Add swagger and swagger examples

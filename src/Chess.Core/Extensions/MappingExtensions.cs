@@ -10,9 +10,10 @@ public static class MappingExtensions
         Move = moveRequest.Move
     };
 
-    public static ChessMoveResponse ToResponse(this ChessMoveDomainModel moveRequest) => new()
+    public static ChessMoveResponse ToResponse(this ChessMoveDomainModel moveDomain) => new()
     {
-        Fen = moveRequest.Fen,
-        Move = moveRequest.Move
+        Fen = moveDomain.Fen,
+        Move = moveDomain.Move,
+        Status = moveDomain.Status
     };
 }

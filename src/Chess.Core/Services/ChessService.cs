@@ -10,6 +10,7 @@ public class ChessService : IChessService
     {
         var engine = string.IsNullOrWhiteSpace(domain.Fen) ? new Engine() : new Engine(domain.Fen!);
 
+        // Validate move
         if (string.IsNullOrWhiteSpace(domain.Move) || domain.Move.Length != 4)
         {
             throw new ValidationException("Invalid move format");
@@ -25,6 +26,11 @@ public class ChessService : IChessService
         var dstCol = GetColumn(dst);
 
         // Validate move
+        if (engine.WhoseMove != engine.HumanPlayer)
+        {
+            throw new ValidationException("The move was made by the wrong player");
+        }
+
         if (!engine.IsValidMove(srcCol, srcRow, dstCol, dstRow))
         {
             throw new ValidationException("Move is incorrect, cannot move there");
@@ -37,7 +43,12 @@ public class ChessService : IChessService
         engine.AiPonderMove();
 
         // Return the result
-        return new ChessMoveDomainModel() { Fen = engine.FEN, Move = engine.LastMove.GetPureCoordinateNotation() };
+        return new ChessMoveDomainModel
+        {
+            Fen = engine.FEN,
+            Move = engine.LastMove.GetPureCoordinateNotation(),
+            Status = GetGameStatus(engine)
+        };
     }
 
     private static byte GetRow(string move)
@@ -104,35 +115,23 @@ public class ChessService : IChessService
         return 255;
     }
 
-    //TODO: Implement endgame conditions
-    // public string? MakeMove(byte sourceColumn, byte sourceRow, byte destinationColumn, byte destinationRow)
-    // {
-    //     if (!_engine.IsValidMove(sourceColumn, sourceRow, destinationColumn, destinationRow))
-    //         return null;
-    //
-    //     _engine.MovePiece(sourceColumn, sourceRow, destinationColumn, destinationRow);
-    //     var output = MakeEngineMove();
-    //
-    //     if (_engine.StaleMate)
-    //     {
-    //         if (_engine.InsufficientMaterial)
-    //             output += "Draw by insufficient material!";
-    //
-    //         else if (_engine.RepeatedMove)
-    //             output += "Draw by repetition!";
-    //
-    //         else if (_engine.FiftyMove)
-    //             output += "Draw by fifty move rule";
-    //
-    //         else
-    //             output += "Stalemate!";
-    //     }
-    //     else if (_engine.GetWhiteMate())
-    //         output += "Black player has successfully checkmated white!";
-    //
-    //     else if (_engine.GetBlackMate())
-    //         output += "White player has successfully checkmated black!";
-    //
-    //     return output;
-    // }
+    private Status GetGameStatus(Engine engine)
+    {
+        if (engine.StaleMate)
+        {
+            return Status.Stalemate;
+        }
+
+        if (engine.GetWhiteMate())
+        {
+            return Status.BlackWon;
+        }
+
+        if (engine.GetBlackMate())
+        {
+            return Status.WhiteWon;
+        }
+
+        return Status.InProgress;
+    }
 }

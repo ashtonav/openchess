@@ -14,8 +14,7 @@ public class ErrorController : ControllerBase
 
         var code = exception switch
         {
-            ArgumentException => StatusCodes.Status400BadRequest,
-            _ => StatusCodes.Status500InternalServerError
+            _ => StatusCodes.Status400BadRequest
         };
 
         Response.StatusCode = code; // You can use HttpStatusCode enum instead

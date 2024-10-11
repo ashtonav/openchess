@@ -7,23 +7,19 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <NoWarn>CS8600;CS8604;CS8618;CS8602;CS1998</NoWarn>
     <UserSecretsId>1c0d743c-1000-405b-b8cf-d8d344b0fd8c</UserSecretsId>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
-    <DockerfileContext>..\..</DockerfileContext>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>../..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6"/>
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.6"/>
-    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.6"/>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0"/>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
-    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.2"/>
-    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.9.0"/>
-    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0"/>
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0"/>
-    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0"/>
-    <PackageReference Include="System.Linq.Async" Version="6.0.1"/>
-    <PackageReference Include="System.Linq.Async.Queryable" Version="6.0.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.2" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.10.0" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.10.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.10.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.10.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +27,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Properties\PublishProfiles\Chess.pubxml"/>
+    <None Remove="Properties\PublishProfiles\Chess.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ public class MoveController(ILogger<MoveController> logger, IChessService chessS
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerRequestExample(typeof(ChessMoveRequest), typeof(MoveExamples))]
     public async Task<ChessMoveResponse?> Create(ChessMoveRequest moveRequest)
     {

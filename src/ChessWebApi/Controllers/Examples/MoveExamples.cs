@@ -8,7 +8,7 @@ public class MoveExamples : IMultipleExamplesProvider<ChessMoveRequest>
     {
         yield return SwaggerExample.Create(
             "Example 1",
-            "Example 1 - Create make your first move in chess",
+            "Example 1 - Make your first move in chess",
             new ChessMoveRequest
             {
                 Move = "e2e4"
